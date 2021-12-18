@@ -13,20 +13,13 @@ const Time = () => {
 
   return (
     <>
-      {/* <DatePicker
-        dateFormat="dd/MM/yyyy"
-        selected={startDate}
-        onChange={selectDateHandler}
-        minDate={today}
-        todayButton={"Today"} /> */}
-
       <DatePicker
         selected={startDate}
         onChange={selectDateHandler}
         minDate={today}
         maxDate={today}
         showTimeSelect
-        dateFormat="d/MM/yyyy HH:mm"
+        dateFormat="dd/MM/yyyy HH:mm"
       />
     </>
   );

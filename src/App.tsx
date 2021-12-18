@@ -32,9 +32,12 @@ type FlightsDataObj = {
 
 const App = () => {
 
+  /* Getting Data from JSON */
   const JSON = require('./data/flights.json')
   const flightsData: FlightsDataObj[] = JSON.data
   const includedData: IncludedData = JSON.included
+
+  /* Formating suggestions for Autocomplete */
   const airports = new Set();
 
   flightsData.forEach(flight => {
@@ -42,6 +45,7 @@ const App = () => {
     airports.add(flight.departureAirport);
   })
 
+  //Type guard
   function isAirport(toBeDetermined: AirportOrAirline): toBeDetermined is Airport {
     if ((toBeDetermined as Airport).city) {
       return true
@@ -58,10 +62,38 @@ const App = () => {
     }
   }
 
+  /* State definition */
+
+
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    console.log('afficher résultat')
-    // console.log()
+    console.log('afficher résultat');
+    console.log('flightsData: ', flightsData)
+    // 1. Récuperer airport Time, Dep & arr
+    let dep = 'CDG';
+    let arr = 'JFK';
+    let inputDepTime = '17:30'.split(':');
+    let inputDepTimeToMin = Number(inputDepTime[0]) * 60 + Number(inputDepTime[1])
+
+    // 2. Checker dans filghtdata si match
+    const result = flightsData
+      .filter(flight => {
+        let IATA = flight.departureAirport.substring(flight.departureAirport.length - 3, flight.departureAirport.length)
+        return IATA === dep
+      })
+      .filter(flight => {
+        let IATA = flight.arrivalAirport.substring(flight.arrivalAirport.length - 3, flight.arrivalAirport.length)
+        return IATA === arr
+      })
+      .filter(flight => {
+        let depTime = flight.takeoff.split(':');
+        let depTimeToMin = Number(depTime[0]) * 60 + Number(depTime[1]);
+        return depTimeToMin > inputDepTimeToMin
+      })
+
+    console.log('result: ', result)
+
+    // 3. setState results
   }
 
   return (
