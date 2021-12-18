@@ -1,0 +1,60 @@
+{
+  "data": [
+    {
+      "id": "flight-1",
+      "flightNumber": "AF 456",
+      "airline": "/airlines/AF",
+      "takeoff": "17:45",
+      "landing": "20:00",
+      "duration": 495,
+      "price": 399.99,
+      "currencyCode": "EUR",
+      "departureAirport": "/airports/CDG",
+      "arrivalAirport": "/airports/JFK"
+    },
+    {
+      "id": "flight-2",
+      "flightNumber": "AF 765",
+      "airline": "/airlines/AF",
+      "takeoff": "19:45",
+      "landing": "22:00",
+      "duration": 495,
+      "price": 399.99,
+      "currencyCode": "EUR",
+      "departureAirport": "/airports/CDG",
+      "arrivalAirport": "/airports/JFK"
+    },
+    {
+      "id": "flight-3",
+      "flightNumber": "LH 123",
+      "airline": "/airlines/LH",
+      "takeoff": "12:00",
+      "landing": "14:30",
+      "duration": 510,
+      "price": 410.0,
+      "currencyCode": "EUR",
+      "departureAirport": "/airports/ORY",
+      "arrivalAirport": "/airports/JFK"
+    }
+  ],
+  "included": {
+    "/airlines/AF": {
+      "name": "Air France"
+    },
+    "/airlines/LH": {
+      "name": "Lufthansa"
+    },
+    "/airports/CDG": {
+      "city": "Paris",
+      "name": "Charles de Gaulle"
+    },
+    "/airports/JFK": {
+      "city": "New York",
+      "name": "John F. Kennedy"
+    },
+    "/airports/ORY": {
+      "city": "Paris",
+      "name": "Paris Orly"
+    }
+  }
+}

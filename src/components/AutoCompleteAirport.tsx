@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from 'styled-components'
 
 type AutoCompleteAirportProps = {
   type: string,
@@ -51,21 +52,26 @@ const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
     }
   }
 
+  // const Input = styled.input`
+  // border: 1px solid #999;
+  // padding: 0.5rem;
+  // width: 300px;`
+
   const SuggestionsListComponent = () => {
     return filteredSuggestions.length ? (
       <ul className="suggestions">
-        {filteredSuggestions.map((suggestion,index) => {
-           let className;
-           // Flag the active suggestion with a class
-           if (index === activeSuggestionIndex) {
-             className = "suggestion-active";
-           }
+        {filteredSuggestions.map((suggestion, index) => {
+          let className;
+          // Flag the active suggestion with a class
+          if (index === activeSuggestionIndex) {
+            className = "suggestion-active";
+          }
           return (
             <li
               key={suggestion}
               className={className}
               onClick={onClick}
-              >
+            >
               {suggestion}
             </li>
           )
