@@ -1,6 +1,8 @@
 import './App.css';
+import { useState } from 'react';
 import AutoCompleteAirport from './components/AutoCompleteAirport';
 import Time from './components/Time';
+import FlightsList from './components/FlightsList';
 
 type Airline = {
   name: string
@@ -17,7 +19,7 @@ interface IncludedData {
   [key: string]: Airline | Airport
 }
 
-type FlightsDataObj = {
+export type FlightsDataObj = {
   id: string,
   flightNumber: string,
   airline: string,
@@ -54,29 +56,50 @@ const App = () => {
   }
 
   const suggestions: string[] = [];
+  const airportsDictionnary = new Map<string, string>()
 
   for (const [key, value] of Object.entries(includedData)) {
     if (isAirport(value)) {
       const IATA = key.substring(key.length - 3, key.length)
       suggestions.push(`${value.city} - ${value.name} (${IATA})`)
+      airportsDictionnary.set(`${value.city} - ${value.name} (${IATA})`, IATA)
     }
   }
 
   /* State definition */
+  const [inputDep, setInputDep] = useState("");
+  const [inputArr, setInputArr] = useState("");
+  const [startDate, setDate] = useState(new Date);
+  const [results, setResults] = useState<FlightsDataObj[]>([]);
 
+  const setInputDepFromChild = (userInput: string) => {
+    setInputDep(userInput)
+  }
+
+  const setInputArrFromChild = (userInput: string) => {
+    setInputArr(userInput)
+  }
+
+  const setInputTimeFromChild = (inputDate: Date) => {
+    setDate(inputDate)
+  }
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    console.log('afficher résultat');
-    console.log('flightsData: ', flightsData)
-    // 1. Récuperer airport Time, Dep & arr
-    let dep = 'CDG';
-    let arr = 'JFK';
-    let inputDepTime = '17:30'.split(':');
-    let inputDepTimeToMin = Number(inputDepTime[0]) * 60 + Number(inputDepTime[1])
 
-    // 2. Checker dans filghtdata si match
-    const result = flightsData
+    /* Search flight inputs */
+    const dep = airportsDictionnary.get(inputDep);
+    const arr = airportsDictionnary.get(inputArr);
+
+    const inputDepTime = startDate  //   Sat Dec 18 2021 19:08:40 GMT+0100 (heure normale d’Europe centrale)
+      .toLocaleTimeString()         //  '19:08:51'
+      .substring(0, 5)              //  '19:08'
+      .split(':');                  //  [19,08]
+
+    const inputDepTimeToMin = Number(inputDepTime[0]) * 60 + Number(inputDepTime[1])
+
+    /* Search flight according inputs */
+    setResults(flightsData
       .filter(flight => {
         let IATA = flight.departureAirport.substring(flight.departureAirport.length - 3, flight.departureAirport.length)
         return IATA === dep
@@ -90,10 +113,7 @@ const App = () => {
         let depTimeToMin = Number(depTime[0]) * 60 + Number(depTime[1]);
         return depTimeToMin > inputDepTimeToMin
       })
-
-    console.log('result: ', result)
-
-    // 3. setState results
+    )
   }
 
   return (
@@ -102,13 +122,27 @@ const App = () => {
       <form onSubmit={handleSubmit}>
         <AutoCompleteAirport
           type='Departure'
-          suggestions={suggestions} />
+          suggestions={suggestions}
+          input={inputDep}
+          updateStateFromChild={setInputDepFromChild} />
         <AutoCompleteAirport
           type='Arrival'
-          suggestions={suggestions} />
-        <Time />
+          suggestions={suggestions}
+          input={inputArr}
+          updateStateFromChild={setInputArrFromChild} />
+        <Time
+          inputDate={startDate}
+          updateStateFromChild={setInputTimeFromChild} />
         <button type='submit'>Search</button>
       </form>
+
+      {results.length > 0 ?
+        (
+          <FlightsList
+            flights={results} />
+        ) : (
+          <>No Result</>
+        )}
     </div >
   );
 }

@@ -2,20 +2,20 @@ import { useState } from 'react';
 import DatePicker from 'react-datepicker'
 // import styled from 'styled-components'
 
-const Time = () => {
+type TimeProps = {
+  inputDate: Date,
+  updateStateFromChild: (date: Date) => void
+}
 
-  const [startDate, setDate] = useState(new Date)
+const Time = (props:TimeProps) => {
+
   const today = new Date()
-
-  const selectDateHandler = (d: Date) => {
-    setDate(d)
-  }
 
   return (
     <>
       <DatePicker
-        selected={startDate}
-        onChange={selectDateHandler}
+        selected={props.inputDate}
+        onChange={props.updateStateFromChild}
         minDate={today}
         maxDate={today}
         showTimeSelect

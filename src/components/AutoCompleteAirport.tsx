@@ -3,18 +3,21 @@ import styled from 'styled-components'
 
 type AutoCompleteAirportProps = {
   type: string,
-  suggestions: string[]
+  suggestions: string[],
+  input: string,
+  updateStateFromChild: (input: string) => void
 }
 
 const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
 
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
-  const [input, setInput] = useState("");
+  // const [input, setInput] = useState("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userInput = e.target.value;
-    setInput(userInput);
+    // setInput(userInput);
+    props.updateStateFromChild(userInput)
 
     // Filter our suggestions that don't contain the user's input
     const unLinked = props.suggestions.filter(
@@ -30,7 +33,8 @@ const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
     setFilteredSuggestions([]);
 
     const userInput = e.target as HTMLElement;
-    setInput(userInput.innerText);
+    // setInput(userInput.innerText);
+    props.updateStateFromChild(userInput.innerText)
 
     setActiveSuggestionIndex(0);
   };
@@ -38,13 +42,14 @@ const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
     if (e.code === "Enter") {
-      setInput(filteredSuggestions[activeSuggestionIndex]);
+      // setInput(filteredSuggestions[activeSuggestionIndex]);
+      props.updateStateFromChild(filteredSuggestions[activeSuggestionIndex])
       setActiveSuggestionIndex(0);
       setFilteredSuggestions([]);
     }
 
     if (e.code === "ArrowDown") {
-      activeSuggestionIndex + 1 > filteredSuggestions.length ? setActiveSuggestionIndex(filteredSuggestions.length) : setActiveSuggestionIndex(activeSuggestionIndex + 1)
+      activeSuggestionIndex + 1 > filteredSuggestions.length - 1 ? setActiveSuggestionIndex(filteredSuggestions.length - 1) : setActiveSuggestionIndex(activeSuggestionIndex + 1)
     }
 
     if (e.code === "ArrowUp") {
@@ -86,10 +91,11 @@ const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
           type="text"
           onChange={onChange}
           onKeyDown={onKeyDown}
-          value={input}
+          // value={input}
+          value={props.input}
         />
       </label>
-      {input && <SuggestionsListComponent />}
+      {props.input && <SuggestionsListComponent />}
     </>
   );
 };
