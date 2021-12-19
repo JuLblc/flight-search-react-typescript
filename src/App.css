@@ -49,7 +49,13 @@ h2 {
 }
 
 form {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.label-container {
+    position: relative;
 }
 
 .input-airport {
@@ -74,7 +80,7 @@ form {
     margin: 0 5px;
 }
 
-.btn {
+.btn-search {
     background-color: rgb(67, 163, 230);
     color: white;
     font-family: Roboto Condensed;
@@ -85,4 +91,113 @@ form {
     padding: 5px 15px;
     border: none;
     margin: 0 5px;
+}
+
+.suggestions {
+    position: absolute;
+    top: 35px;
+    right: 5px;
+    width: 250px;
+    border: 1px solid #999;
+    border-top-width: 0;
+    list-style: none;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.suggestions li {
+    padding: 0.5rem;
+    background-color: rgb(25, 33, 41);
+    color: white;
+}
+
+.suggestion-active,
+.suggestions li:hover {
+    background-color: white;
+    color: rgb(25, 33, 41);
+    cursor: pointer;
+    font-weight: 900;
+}
+
+.suggestions li:not(:last-of-type) {
+    border-bottom: 1px solid #999;
+}
+
+.message {
+    font-family: Roboto Condensed;
+    font-size: 3em;
+    text-align: center;
+    color: #d0435b;
+}
+
+.flight-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 2em;
+    text-align: center;
+    border: 2px solid #eee;
+    border-radius: 20px;
+    box-shadow: 2px 2px 10px 0 black;
+    margin: 50px auto;
+    padding: 10px 20px;
+    width: 40%;
+}
+
+.flight-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flight-container p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-select {
+    background-color: white;
+    color: rgb(67, 163, 230);
+    font-family: Roboto Condensed;
+    font-size: 1em;
+    letter-spacing: 0.3px;
+    text-align: center;
+    text-decoration: none;
+    padding: 5px 15px;
+    border: 1px solid rgb(67, 163, 230);
+    margin: 0 5px;
+}
+
+.flight-info-airport {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.duration {
+    display: flex;
+    align-items: center;
+    margin-left: 25px;
+    margin-right: 25px;
+    font-size: 0.8em;
+    font-weight: 700;
+}
+
+.hour {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #4e4760;
+}
+.airport {
+    font-size: 0.8em;
+    text-align: right;
+    font-weight: 700;
+    color: #acacac;
+}
+
+
+.flight-price p {
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.logo {
+    width: 80px;
 }

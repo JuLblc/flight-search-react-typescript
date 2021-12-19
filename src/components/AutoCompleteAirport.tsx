@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from 'styled-components'
+// import styled from 'styled-components'
 
 type AutoCompleteAirportProps = {
   type: string,
@@ -12,11 +12,9 @@ const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
 
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
-  // const [input, setInput] = useState("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userInput = e.target.value;
-    // setInput(userInput);
     props.updateStateFromChild(userInput)
 
     // Filter our suggestions that don't contain the user's input
@@ -33,7 +31,6 @@ const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
     setFilteredSuggestions([]);
 
     const userInput = e.target as HTMLElement;
-    // setInput(userInput.innerText);
     props.updateStateFromChild(userInput.innerText)
 
     setActiveSuggestionIndex(0);
@@ -42,7 +39,6 @@ const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
     if (e.code === "Enter") {
-      // setInput(filteredSuggestions[activeSuggestionIndex]);
       props.updateStateFromChild(filteredSuggestions[activeSuggestionIndex])
       setActiveSuggestionIndex(0);
       setFilteredSuggestions([]);
@@ -56,11 +52,6 @@ const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
       activeSuggestionIndex - 1 < 0 ? setActiveSuggestionIndex(0) : setActiveSuggestionIndex(activeSuggestionIndex - 1)
     }
   }
-
-  // const Input = styled.input`
-  // border: 1px solid #999;
-  // padding: 0.5rem;
-  // width: 300px;`
 
   const SuggestionsListComponent = () => {
     return filteredSuggestions.length ? (
@@ -85,20 +76,19 @@ const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
   }
 
   return (
-    <>
+    <div className="label-container">
       <label>
         <input
           className="input-airport"
           type="text"
           onChange={onChange}
           onKeyDown={onKeyDown}
-          // value={input}
           value={props.input}
           placeholder={props.type}
         />
       </label>
       {props.input && <SuggestionsListComponent />}
-    </>
+    </div>
   );
 };
 export default AutoCompleteAirport;

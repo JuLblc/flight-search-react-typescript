@@ -71,6 +71,7 @@ const App = () => {
   const [inputArr, setInputArr] = useState("");
   const [startDate, setDate] = useState<Date | null>();
   const [results, setResults] = useState<FlightsDataObj[]>([]);
+  const [isFirstSearch, setIsFirstSearch] = useState(true);
 
   const setInputDepFromChild = (userInput: string) => {
     setInputDep(userInput)
@@ -84,8 +85,10 @@ const App = () => {
     setDate(inputDate)
   }
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    setIsFirstSearch(false);
 
     /* Search flight inputs */
     const dep = airportsDictionnary.get(inputDep);
@@ -140,7 +143,7 @@ const App = () => {
           <Time
             inputDate={startDate}
             updateStateFromChild={setInputTimeFromChild} />
-          <button className="btn" type='submit'>Search</button>
+          <button className="btn-search" type='submit'>Search</button>
         </form>
       </section>
 
@@ -148,9 +151,10 @@ const App = () => {
         (
           <FlightsList
             flights={results} />
-        ) : (
-          <>No Result</>
-        )}
+        ) : !isFirstSearch ? (
+          
+          <p className='message'>Sorry we didn't find any flight corresponding to your research...</p>
+        ) : null}
     </div >
   );
 }
