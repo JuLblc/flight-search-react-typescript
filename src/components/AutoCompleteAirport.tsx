@@ -86,13 +86,15 @@ const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
 
   return (
     <>
-      <label> {props.type}:
+      <label>
         <input
+          className="input-airport"
           type="text"
           onChange={onChange}
           onKeyDown={onKeyDown}
           // value={input}
           value={props.input}
+          placeholder={props.type}
         />
       </label>
       {props.input && <SuggestionsListComponent />}

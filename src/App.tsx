@@ -1,8 +1,8 @@
-import './App.css';
+import Time from './components/Time';
 import { useState } from 'react';
 import AutoCompleteAirport from './components/AutoCompleteAirport';
-import Time from './components/Time';
 import FlightsList from './components/FlightsList';
+import './App.css';
 
 type Airline = {
   name: string
@@ -69,7 +69,7 @@ const App = () => {
   /* State definition */
   const [inputDep, setInputDep] = useState("");
   const [inputArr, setInputArr] = useState("");
-  const [startDate, setDate] = useState(new Date);
+  const [startDate, setDate] = useState<Date | null>();
   const [results, setResults] = useState<FlightsDataObj[]>([]);
 
   const setInputDepFromChild = (userInput: string) => {
@@ -91,50 +91,58 @@ const App = () => {
     const dep = airportsDictionnary.get(inputDep);
     const arr = airportsDictionnary.get(inputArr);
 
-    const inputDepTime = startDate  //   Sat Dec 18 2021 19:08:40 GMT+0100 (heure normale d’Europe centrale)
-      .toLocaleTimeString()         //  '19:08:51'
-      .substring(0, 5)              //  '19:08'
-      .split(':');                  //  [19,08]
+    if (startDate) {
+      const inputDepTime = startDate  //   Sat Dec 18 2021 19:08:40 GMT+0100 (heure normale d’Europe centrale)
+        .toLocaleTimeString()         //  '19:08:51'
+        .substring(0, 5)              //  '19:08'
+        .split(':');                  //  [19,08]
 
-    const inputDepTimeToMin = Number(inputDepTime[0]) * 60 + Number(inputDepTime[1])
+      const inputDepTimeToMin = Number(inputDepTime[0]) * 60 + Number(inputDepTime[1])
 
-    /* Search flight according inputs */
-    setResults(flightsData
-      .filter(flight => {
-        let IATA = flight.departureAirport.substring(flight.departureAirport.length - 3, flight.departureAirport.length)
-        return IATA === dep
-      })
-      .filter(flight => {
-        let IATA = flight.arrivalAirport.substring(flight.arrivalAirport.length - 3, flight.arrivalAirport.length)
-        return IATA === arr
-      })
-      .filter(flight => {
-        let depTime = flight.takeoff.split(':');
-        let depTimeToMin = Number(depTime[0]) * 60 + Number(depTime[1]);
-        return depTimeToMin > inputDepTimeToMin
-      })
-    )
+      /* Search flight according inputs */
+      setResults(flightsData
+        .filter(flight => {
+          let IATA = flight.departureAirport.substring(flight.departureAirport.length - 3, flight.departureAirport.length)
+          return IATA === dep
+        })
+        .filter(flight => {
+          let IATA = flight.arrivalAirport.substring(flight.arrivalAirport.length - 3, flight.arrivalAirport.length)
+          return IATA === arr
+        })
+        .filter(flight => {
+          let depTime = flight.takeoff.split(':');
+          let depTimeToMin = Number(depTime[0]) * 60 + Number(depTime[1]);
+          return depTimeToMin > inputDepTimeToMin
+        })
+      )
+    }
   }
 
   return (
 
     <div className="App">
-      <form onSubmit={handleSubmit}>
-        <AutoCompleteAirport
-          type='Departure'
-          suggestions={suggestions}
-          input={inputDep}
-          updateStateFromChild={setInputDepFromChild} />
-        <AutoCompleteAirport
-          type='Arrival'
-          suggestions={suggestions}
-          input={inputArr}
-          updateStateFromChild={setInputArrFromChild} />
-        <Time
-          inputDate={startDate}
-          updateStateFromChild={setInputTimeFromChild} />
-        <button type='submit'>Search</button>
-      </form>
+      <header className="header">
+        <h1>Worldia challenge!!</h1>
+        <h2>Let the trip begin</h2>
+      </header>
+      <section className='search-input'>
+        <form onSubmit={handleSubmit}>
+          <AutoCompleteAirport
+            type='From'
+            suggestions={suggestions}
+            input={inputDep}
+            updateStateFromChild={setInputDepFromChild} />
+          <AutoCompleteAirport
+            type='To'
+            suggestions={suggestions}
+            input={inputArr}
+            updateStateFromChild={setInputArrFromChild} />
+          <Time
+            inputDate={startDate}
+            updateStateFromChild={setInputTimeFromChild} />
+          <button className="btn" type='submit'>Search</button>
+        </form>
+      </section>
 
       {results.length > 0 ?
         (
