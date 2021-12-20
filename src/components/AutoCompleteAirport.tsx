@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-// import styled from 'styled-components'
+
+import { StyledLabelContainer, StyledInputAirport } from './styled-components/Search.style'
 
 type AutoCompleteAirportProps = {
   type: string,
@@ -76,10 +77,9 @@ const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
   }
 
   return (
-    <div className="label-container">
+    <StyledLabelContainer>
       <label>
-        <input
-          className="input-airport"
+        <StyledInputAirport
           type="text"
           onChange={onChange}
           onKeyDown={onKeyDown}
@@ -88,7 +88,7 @@ const AutoCompleteAirport = (props: AutoCompleteAirportProps) => {
         />
       </label>
       {props.input && <SuggestionsListComponent />}
-    </div>
+    </StyledLabelContainer>
   );
 };
 export default AutoCompleteAirport;

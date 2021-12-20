@@ -19,75 +19,12 @@ body {
     font-weight: 300;
 }
 
-h1 {
-    font-family: Roboto Condensed;
-    font-size: 5em;
-    text-align: center;
-    text-transform: uppercase;
-}
-
-h2 {
-    font-size: 3em;
-    text-align: center;
-    text-transform: uppercase;
-    line-height: 1.5em;
-    text-shadow: #020819 8px -20px 9px;
-}
-
-.header {
-    background: linear-gradient(to bottom right, #196095, #85cbfb);
-    height: 250px;
-    padding-top: 50px;
-}
-
-.search-input {
-    background-color: rgb(25, 33, 41);
-    color: white;
-    font-size: 1.5em;
-    padding-top: 25px;
-    padding-bottom: 25px;
-}
-
-form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.label-container {
-    position: relative;
-}
-
-.input-airport {
-    margin: 0 5px;
-    font-family: Roboto Condensed;
-    width: 250px;
-    font-size: 1em;
-    letter-spacing: 0.3px;
-    text-align: center;
-    padding: 5px 15px;
-    border: none;
-}
-
 .react-datepicker-wrapper input {
     font-family: Roboto Condensed;
     width: 200px;
     font-size: 1em;
     letter-spacing: 0.3px;
     text-align: center;
-    padding: 5px 15px;
-    border: none;
-    margin: 0 5px;
-}
-
-.btn-search {
-    background-color: rgb(67, 163, 230);
-    color: white;
-    font-family: Roboto Condensed;
-    font-size: 1em;
-    letter-spacing: 0.3px;
-    text-align: center;
-    text-decoration: none;
     padding: 5px 15px;
     border: none;
     margin: 0 5px;
@@ -123,13 +60,6 @@ form {
     border-bottom: 1px solid #999;
 }
 
-.message {
-    font-family: Roboto Condensed;
-    font-size: 3em;
-    text-align: center;
-    color: #d0435b;
-}
-
 .flight-container {
     display: flex;
     justify-content: space-between;
@@ -153,19 +83,6 @@ form {
     margin-bottom: 10px;
 }
 
-.btn-select {
-    background-color: white;
-    color: rgb(67, 163, 230);
-    font-family: Roboto Condensed;
-    font-size: 1em;
-    letter-spacing: 0.3px;
-    text-align: center;
-    text-decoration: none;
-    padding: 5px 15px;
-    border: 1px solid rgb(67, 163, 230);
-    margin: 0 5px;
-}
-
 .flight-info-airport {
     margin-left: 10px;
     margin-right: 10px;
@@ -185,6 +102,7 @@ form {
     font-weight: 700;
     color: #4e4760;
 }
+
 .airport {
     font-size: 0.8em;
     text-align: right;

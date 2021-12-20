@@ -1,36 +1,19 @@
-import Time from './components/Time';
 import { useState } from 'react';
+
+import Time from './components/Time';
 import AutoCompleteAirport from './components/AutoCompleteAirport';
 import FlightsList from './components/FlightsList';
+
 import './App.css';
+import { StyledHeader, StyledH1, StyledH2 } from './components/styled-components/Header.style';
+import { StyledButton } from './components/styled-components/Button.style';
+import { StyledSection , StyledForm, StyledWarningMsg} from './components/styled-components/Search.style'
 
-type Airline = {
-  name: string
-}
-
-type Airport = {
-  city: string,
-  name: string
-}
-
-type AirportOrAirline = Airport | Airline
-
-interface IncludedData {
-  [key: string]: Airline | Airport
-}
-
-export type FlightsDataObj = {
-  id: string,
-  flightNumber: string,
-  airline: string,
-  takeoff: string,
-  landing: string,
-  duration: number,
-  price: number,
-  currencyCode: string,
-  departureAirport: string,
-  arrivalAirport: string
-}
+import {
+  IncludedData,
+  FlightsDataObj,
+  isAirport
+} from "./types/types";
 
 const App = () => {
 
@@ -46,14 +29,6 @@ const App = () => {
     airports.add(flight.arrivalAirport);
     airports.add(flight.departureAirport);
   })
-
-  //Type guard
-  function isAirport(toBeDetermined: AirportOrAirline): toBeDetermined is Airport {
-    if ((toBeDetermined as Airport).city) {
-      return true
-    }
-    return false
-  }
 
   const suggestions: string[] = [];
   const airportsDictionnary = new Map<string, string>()
@@ -124,12 +99,14 @@ const App = () => {
   return (
 
     <div className="App">
-      <header className="header">
-        <h1>Worldia challenge!!</h1>
-        <h2>Let the trip begin</h2>
-      </header>
-      <section className='search-input'>
-        <form onSubmit={handleSubmit}>
+
+      <StyledHeader>
+        <StyledH1>Worldia challenge!!</StyledH1>
+        <StyledH2>Let the trip begin</StyledH2>
+      </StyledHeader>
+
+      <StyledSection>
+        <StyledForm onSubmit={handleSubmit}>
           <AutoCompleteAirport
             type='From'
             suggestions={suggestions}
@@ -143,17 +120,17 @@ const App = () => {
           <Time
             inputDate={startDate}
             updateStateFromChild={setInputTimeFromChild} />
-          <button className="btn-search" type='submit'>Search</button>
-        </form>
-      </section>
+          <StyledButton type='submit' variante='search'>Search</StyledButton>
+        </StyledForm>
+      </StyledSection>
 
       {results.length > 0 ?
         (
           <FlightsList
             flights={results} />
         ) : !isFirstSearch ? (
-          
-          <p className='message'>Sorry we didn't find any flight corresponding to your research...</p>
+
+          <StyledWarningMsg>Sorry we didn't find any flight corresponding to your research...</StyledWarningMsg>
         ) : null}
     </div >
   );

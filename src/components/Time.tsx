@@ -1,5 +1,4 @@
 import DatePicker from 'react-datepicker'
-// import styled from 'styled-components'
 
 type TimeProps = {
   inputDate: Date | null | undefined,

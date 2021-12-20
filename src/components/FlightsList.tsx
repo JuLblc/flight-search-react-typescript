@@ -1,4 +1,6 @@
-import { FlightsDataObj } from "../App"
+import { FlightsDataObj } from "../types/types"
+import { StyledButton } from './styled-components/Button.style';
+
 import AF from '../data/AF.jpg'
 import LH from '../data/LH.png'
 
@@ -55,7 +57,7 @@ const FlightsList = (props: FlightsListProps) => {
           </div>
           <div className="flight-price">
             <p>{flight.price} {flight.currencyCode}</p>
-            <button className="btn-select" onClick={(e) => printFlightDetails(e, flight.id)}>Select Flight</button>
+            <StyledButton type='submit' variante='select' onClick={(e) => printFlightDetails(e, flight.id)}>Select Flight</StyledButton>
           </div>
         </div>
       ))}
